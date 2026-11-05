@@ -14,16 +14,47 @@
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-import {getFirestore,doc,onSnapshot,setDoc,serverTimestamp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
-// Replace with YOUR Firebase web app config from Firebase console (not a secret).
-const firebaseConfig={apiKey:'REPLACE_ME',authDomain:'REPLACE_ME.firebaseapp.com',projectId:'REPLACE_ME',appId:'REPLACE_ME'};
-// Must match the admin email in firestore.rules exactly.
-const ADMIN_EMAIL='REPLACE_ADMIN_EMAIL@example.com';
+import {getFirestore,doc,getDoc,onSnapshot,setDoc,serverTimestamp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+// Paste your exact Firebase web app configuration from Project Settings > Your apps. Never paste a service-account key here.
+const firebaseConfig={apiKey: "AIzaSyDm1Z70iSWnWsf_uZLnABzq-etpb9cGr9c",
+  authDomain: "hadawath-dashboard.firebaseapp.com",
+  projectId: "hadawath-dashboard",
+  storageBucket: "hadawath-dashboard.firebasestorage.app",
+  messagingSenderId: "403933173958",
+  appId: "1:403933173958:web:e287d3838fc5933ee01fc7"};
+// Admin access is determined by the signed-in user's Firestore members/{uid} document.
+let isCurrentAdmin=false;
 const $=id=>document.getElementById(id);const show=(id,on)=>$(id).classList.toggle('hide',!on);
 const initial={theme:'Theme voting underway',nextTheme:'Awaiting poll result',notice:'Members are choosing the next weekly theme.',announcement:'Welcome to HADAWATH! Official updates will appear here.',cases:[{name:'Sadew case 01/2026',status:'Closed'},{name:'Ranuka case 02/2026',status:'Awaiting update'},{name:'Sadaru case 03/2026',status:'Closed'}],awards:[]};
 let state=initial;let unsubscribe=null;let currentUser=null;
 function safeList(target,items,field){const root=$(target);root.replaceChildren();if(!Array.isArray(items)||!items.length){const e=document.createElement('div');e.className='muted';e.textContent='No results yet';root.append(e);return;}items.forEach(item=>{const el=document.createElement('div');el.className='item';const title=document.createElement('strong');title.textContent=String(item.name||item.award||'');const line=document.createElement('div');line.className='muted';line.textContent=String(item.status||item.winner||'');el.append(title,line);root.append(el);});}
-function render(s){state={...initial,...s};$('theme').textContent=state.theme;$('nextTheme').textContent=state.nextTheme;$('notice').textContent=state.notice;$('announcement').textContent=state.announcement;$('updated').textContent=state.updatedAt?.toDate?.().toLocaleString()||'Not yet updated';safeList('cases',state.cases);safeList('awards',state.awards);if(currentUser?.email?.toLowerCase()===ADMIN_EMAIL.toLowerCase()){ $('editTheme').value=state.theme;$('editNext').value=state.nextTheme;$('editNotice').value=state.notice;$('editAnnouncement').value=state.announcement;$('editCases').value=(state.cases||[]).map(x=>`${x.name} | ${x.status}`).join('\n');$('editAwards').value=(state.awards||[]).map(x=>`${x.award} | ${x.winner}`).join('\n');}}
+function render(s){state={...initial,...s};$('theme').textContent=state.theme;$('nextTheme').textContent=state.nextTheme;$('notice').textContent=state.notice;$('announcement').textContent=state.announcement;$('updated').textContent=state.updatedAt?.toDate?.().toLocaleString()||'Not yet updated';safeList('cases',state.cases);safeList('awards',state.awards);if(isCurrentAdmin){ $('editTheme').value=state.theme;$('editNext').value=state.nextTheme;$('editNotice').value=state.notice;$('editAnnouncement').value=state.announcement;$('editCases').value=(state.cases||[]).map(x=>`${x.name} | ${x.status}`).join('\n');$('editAwards').value=(state.awards||[]).map(x=>`${x.award} | ${x.winner}`).join('\n');}}
 function parseRows(s,a,b){return s.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,30).map(line=>{const [left,...rest]=line.split('|');return {[a]:(left||'').trim().slice(0,100),[b]:rest.join('|').trim().slice(0,100)}})}
-if(firebaseConfig.apiKey==='REPLACE_ME'){show('setup',true);}else{try{const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),ref=doc(db,'dashboard','main');show('login',true);$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginMessage').textContent='';try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(err){$('loginMessage').textContent='Login failed. Check credentials or ask the admin for access.'}});$('logout').onclick=()=>signOut(auth);onAuthStateChanged(auth,user=>{if(unsubscribe){unsubscribe();unsubscribe=null}currentUser=user;show('login',!user);show('dashboard',!!user);if(!user)return;$('userLine').textContent=`Signed in: ${user.email}`;$('adminPanel').hidden=user.email?.toLowerCase()!==ADMIN_EMAIL.toLowerCase();unsubscribe=onSnapshot(ref,snap=>render(snap.exists()?snap.data():initial),err=>{show('dashboard',false);show('login',true);$('loginMessage').textContent='Access denied. Ask the admin to add your email to the security rules.'});});$('editForm').addEventListener('submit',async e=>{e.preventDefault();$('saveMessage').textContent='Saving…';try{await setDoc(ref,{theme:$('editTheme').value.trim(),nextTheme:$('editNext').value.trim(),notice:$('editNotice').value.trim(),announcement:$('editAnnouncement').value.trim(),cases:parseRows($('editCases').value,'name','status'),awards:parseRows($('editAwards').value,'award','winner'),updatedAt:serverTimestamp()});$('saveMessage').className='success';$('saveMessage').textContent='Saved successfully.'}catch(err){$('saveMessage').className='error';$('saveMessage').textContent='Save failed. Check Firestore security rules.'}});}catch(err){show('setup',true);$('setup').append(document.createTextNode(' Firebase configuration is invalid.'))}}
+if(firebaseConfig.apiKey==='REPLACE_ME'){show('setup',true);}else{try{const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),ref=doc(db,'dashboard','main');show('login',true);$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginMessage').textContent='';try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(err){$('loginMessage').textContent='Login failed. Check credentials or ask the admin for access.'}});$('logout').onclick=()=>signOut(auth);onAuthStateChanged(auth,async user=>{
+ if(unsubscribe){unsubscribe();unsubscribe=null;}
+ currentUser=user;isCurrentAdmin=false;
+ show('dashboard',false);show('login',!user);
+ $('adminPanel').hidden=true;
+ if(!user)return;
+ try{
+  const memberSnap=await getDoc(doc(db,'members',user.uid));
+  if(auth.currentUser?.uid!==user.uid)return;
+  if(!memberSnap.exists()){
+   $('loginMessage').textContent='This account is not an approved HADAWATH member.';
+   await signOut(auth);return;
+  }
+  isCurrentAdmin=memberSnap.data().role==='admin';
+  $('userLine').textContent=`Signed in: ${user.email}`;
+  $('adminPanel').hidden=!isCurrentAdmin;
+  show('login',false);show('dashboard',true);
+  unsubscribe=onSnapshot(ref,snap=>render(snap.exists()?snap.data():initial),err=>{
+   show('dashboard',false);show('login',true);
+   $('loginMessage').textContent='Unable to read dashboard. Check Firestore permissions.';
+  });
+ }catch(err){
+  $('loginMessage').textContent='Access could not be verified. Check your membership and Firestore rules.';
+  await signOut(auth);
+ }
+});
+$('editForm').addEventListener('submit',async e=>{e.preventDefault();$('saveMessage').textContent='Saving…';if(!isCurrentAdmin){$('saveMessage').textContent='Admin access required.';return;}try{await setDoc(ref,{theme:$('editTheme').value.trim(),nextTheme:$('editNext').value.trim(),notice:$('editNotice').value.trim(),announcement:$('editAnnouncement').value.trim(),cases:parseRows($('editCases').value,'name','status'),awards:parseRows($('editAwards').value,'award','winner'),updatedAt:serverTimestamp()});$('saveMessage').className='success';$('saveMessage').textContent='Saved successfully.'}catch(err){$('saveMessage').className='error';$('saveMessage').textContent='Save failed. Check Firestore security rules.'}});}catch(err){show('setup',true);$('setup').append(document.createTextNode(' Firebase configuration is invalid.'))}}
 </script></body></html>
