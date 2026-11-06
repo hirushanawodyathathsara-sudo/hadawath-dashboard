@@ -233,10 +233,16 @@ async function startSocial(db,uid){
 function dmThreadId(a,b){return [a,b].sort().join('_')}
 async function ensureThread(uid,peer){
  const id=dmThreadId(uid,peer),ref=doc(socialDb,'privateChats',id);
- const snap=await getDoc(ref);
- if(!snap.exists()){
-  try{await setDoc(ref,{members:[uid,peer].sort(),createdAt:serverTimestamp()});}
-  catch(err){const check=await getDoc(ref);if(!check.exists())throw err;}
+ // A read of a not-yet-created thread is denied by participant-only Firestore rules.
+ // Attempt create first; if it already exists, verify access with a read.
+ try{
+  await setDoc(ref,{members:[uid,peer].sort(),createdAt:serverTimestamp()});
+ }catch(createError){
+  const existing=await getDoc(ref);
+  if(!existing.exists() || !Array.isArray(existing.data().members) ||
+     !existing.data().members.includes(uid) || !existing.data().members.includes(peer)){
+   throw createError;
+  }
  }
 }
 
