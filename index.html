@@ -56,6 +56,8 @@ header> :not(.royal-spark):not(.motion-particle){position:relative;z-index:1}
 
 /* V7: members-only live royal chat */
 .chat-shell{border:1px solid #a87638;background:linear-gradient(145deg,#24131e,#0c0c13);border-radius:16px;overflow:hidden}.chat-head{padding:12px 15px;background:#43202b;color:#ffda91;font-weight:750}.chat-feed{height:390px;max-height:58dvh;overflow-y:auto;overscroll-behavior:contain;padding:14px;display:flex;flex-direction:column;gap:12px;scrollbar-color:#a87638 #170e16}.chat-msg{max-width:88%;align-self:flex-start;background:#33212d;border:1px solid #674534;border-radius:15px 15px 15px 4px;padding:10px 12px;overflow-wrap:anywhere;animation:riseIn .22s ease both}.chat-msg.mine{align-self:flex-end;background:#4b2d21;border-color:#b48444;border-radius:15px 15px 4px 15px}.chat-author{color:#f9d58d;font-size:12px;font-weight:800}.chat-body{white-space:pre-wrap;line-height:1.5;margin:4px 0}.chat-time{font-size:10px;color:#c4b3a6;text-align:right}.chat-form{display:flex;gap:8px;padding:12px;background:#1b111a;border-top:1px solid #68472d;align-items:end}.chat-form textarea{margin:0;min-height:46px;max-height:115px;flex:1;resize:vertical}.chat-form button{flex:0 0 auto;min-width:66px}.chat-status{padding:0 14px 12px;font-size:12px;color:#e4c397}.chat-msg:focus-visible{outline:2px solid #ffd48d}@media(max-width:450px){.chat-feed{height:55dvh}.chat-msg{max-width:94%}.chat-form{gap:6px;padding:9px}.chat-form button{padding:10px;min-width:58px}}@media(prefers-reduced-motion:reduce){.chat-msg{animation:none}}
+
+.presence-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}.presence-person{border:1px solid var(--line);background:#21131a;border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}.presence-person button{font-size:12px;padding:9px}.presence-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#888;margin-right:7px}.presence-dot.online{background:#46df8c;box-shadow:0 0 10px #46df8c88}#privateChat[hidden]{display:none!important}#dmFeed{margin:12px 0}#dmForm{display:flex;gap:8px}#dmForm textarea{flex:1;min-width:0}@media(max-width:650px){.presence-grid{grid-template-columns:1fr 1fr}.presence-person{flex-wrap:wrap}.presence-person button{width:100%}}@media(max-width:370px){.presence-grid{grid-template-columns:1fr}}
 </style></head><body><main><header><div class="royal-spark"></div><div class="eyebrow">👑 PRIVATE MEMBERS KINGDOM 👑</div><h1>HADAWATH</h1><div class="eyebrow">⚔️ DIVINE KINGDOM WEEK ⚔️</div><p class="royal-tagline">One Kingdom • Nine Legends • Royal Adventures</p></header>
 <section id="setup" class="card hide"><h2>⚙️ Firebase setup needed</h2><p>This dashboard needs your own free Firebase project. Follow the included SETUP guide, then replace the Firebase configuration in this HTML file.</p></section>
 <section id="login" class="card hide"><h2>🔒 Members Login</h2><p class="muted">Only invited HADAWATH members can access the dashboard.</p><form id="loginForm"><label>Email<input id="email" type="email" autocomplete="username" required></label><label>Password<input id="password" type="password" autocomplete="current-password" required></label><button type="submit">Sign in</button></form><p id="loginMessage" class="error" role="status"></p></section>
@@ -71,6 +73,8 @@ header> :not(.royal-spark):not(.motion-particle){position:relative;z-index:1}
 <a class="royal-link" href="#royalChat"><span class="symbol">💬</span><span><b>Royal Chat</b><small>Members Live Chat</small></span></a>
 <a class="royal-link" href="#membersSection"><span class="symbol">👥</span><span><b>Members</b><small>රාජධානියේ සාමාජිකයෝ</small></span></a>
 </nav><div class="grid">
+<div class="card wide royal-section" id="royalMembers"><div class="row"><h2>🟢 Royal Members • Online <span id="onlineCount">0</span></h2><span class="muted">Active in last ~2 minutes</span></div><p class="sectionHelp">Member කෙනෙක් තෝරලා Private Chat පටන් ගන්න. Online status එක ආසන්න අගයක්.</p><div id="presenceList" class="presence-grid"><p class="muted">Loading members…</p></div></div>
+<div class="card wide royal-section" id="privateChat" hidden><div class="row"><h2 id="dmTitle">🔐 Private Chat</h2><button type="button" class="secondary" id="dmClose">Close</button></div><p class="sectionHelp">Messages only you and the selected member can read. Admin does not automatically get access.</p><div class="chat-feed" id="dmFeed" role="log" aria-live="polite" style="min-height:180px;max-height:380px"></div><form id="dmForm" class="chat-form"><textarea id="dmInput" maxlength="500" rows="1" required placeholder="Private message..."></textarea><button type="submit" id="dmSend">Send ➤</button></form><p id="dmStatus" class="chat-status" role="status"></p></div>
 <div class="card wide royal-section" id="royalChat"><h2>💬 Royal Chat • රාජධානියේ කතාබහ</h2><p class="sectionHelp">Approved HADAWATH members ලාට පමණයි. Messages realtime update වෙනවා. ගෞරවයෙන් කතා කරමු 👑</p><div class="chat-shell"><div class="chat-head">👑 HADAWATH • Members Chat <span id="chatCount" class="muted"></span></div><div class="chat-feed" id="chatFeed" role="log" aria-live="polite" aria-label="Group messages"><p class="muted">Chat loading…</p></div><form id="chatForm" class="chat-form"><label for="chatInput" class="hide">Message</label><textarea id="chatInput" rows="1" maxlength="500" placeholder="රාජ භාෂාවෙන් Message එකක් ලියන්න..." required></textarea><button id="chatSend" type="submit">Send ➤</button></form><div id="chatStatus" class="chat-status" role="status">Members-only chat • Max 500 characters</div></div></div>
 <div class="card hero wide" id="homeSection"><div class="row"><div><div class="eyebrow">CURRENT WEEK</div><div class="big" id="theme">Theme voting underway</div><p id="notice">The next theme will be decided by member vote.</p></div><span class="pill">👑 HADAWATH</span></div></div>
 <div class="card"><h2>👑 Official Roles</h2><div class="list"><div class="item"><strong>Guwa (Menula)</strong><div class="muted">Supreme Founder • Deputy Chief Justice</div></div><div class="item"><strong>Hirusha (Kiri Putha)</strong><div class="muted">Supreme Overseer • Chief Justice</div></div><div class="item"><strong>Ravish (Ge Kolla)</strong><div class="muted">High Court Concept Founder</div></div><div class="item"><strong>ChatGPT</strong><div class="muted">AI Secretary (drafting assistant)</div></div></div></div>
@@ -103,7 +107,7 @@ header> :not(.royal-spark):not(.motion-particle){position:relative;z-index:1}
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-import {getFirestore,doc,getDoc,onSnapshot,setDoc,serverTimestamp,collection,query,orderBy,limit,addDoc} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import {getFirestore,doc,getDoc,onSnapshot,setDoc,serverTimestamp,collection,query,orderBy,limit,addDoc,getDocs,updateDoc} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 // Paste your exact Firebase web app configuration from Project Settings > Your apps. Never paste a service-account key here.
 const firebaseConfig={apiKey: "AIzaSyDm1Z70iSWnWsf_uZLnABzq-etpb9cGr9c",
   authDomain: "hadawath-dashboard.firebaseapp.com",
@@ -116,7 +120,7 @@ let isCurrentAdmin=false;
 const $=id=>document.getElementById(id);const show=(id,on)=>$(id).classList.toggle('hide',!on);
 const roster=[['Menula','Guwa','Supreme Founder'],['Hirusha','Kiri Putha','Supreme Overseer'],['Ravish','Ge Kolla','High Court Concept Founder'],['Pavith','Batta','Member'],['Sadew','Polla','Member'],['Ashen','Thawwa','Member'],['Lochana','Lolla','Member'],['Ranuka','Rani','Member'],['Sadaru','Lesbi','Member']];
 const initial={theme:'Theme voting underway',nextTheme:'Awaiting poll result',notice:'Members are choosing the next weekly theme.',announcement:'Welcome to HADAWATH! Official updates will appear here.',cases:[{name:'Sadew case 01/2026',status:'Closed'},{name:'Ranuka case 02/2026',status:'Awaiting update'},{name:'Sadaru case 03/2026',status:'Closed'}],awards:[],scores:[],polls:[],caseRecords:[],themeHistory:[],achievements:[]};
-let state=initial;let unsubscribe=null;let chatUnsubscribe=null;let currentUser=null;let chatName="Member";let lastChatSend=0;
+let state=initial;let unsubscribe=null;let chatUnsubscribe=null;let presenceUnsubscribe=null;let dmUnsubscribe=null;let presenceTimer=null;let presenceClock=null;let activePeer=null;let memberDirectory=[];let lastDmSend=0;let currentUser=null;let chatName="Member";let lastChatSend=0;
 function safeList(target,items,field){const root=$(target);root.replaceChildren();if(!Array.isArray(items)||!items.length){const e=document.createElement('div');e.className='muted';e.textContent='No results yet';root.append(e);return;}items.forEach(item=>{const el=document.createElement('div');el.className='item';const title=document.createElement('strong');title.textContent=String(item.name||item.award||'');const line=document.createElement('div');line.className='muted';line.textContent=String(item.status||item.winner||'');el.append(title,line);root.append(el);});}
 function renderExtra(){const members=$('membersList');members.replaceChildren();for(const [name,nick,role] of roster){const el=document.createElement('div');el.className='member';const title=document.createElement('b');title.textContent=name;const info=document.createElement('div');info.className='muted';info.textContent=nick+' • '+role;el.append(title,info);members.append(el)}const lb=$('leaderboard');lb.replaceChildren();const scores=Array.isArray(state.scores)?state.scores.filter(x=>Number.isFinite(Number(x.points))&&Number(x.points)>=0).sort((a,b)=>Number(b.points)-Number(a.points)):[];if(!scores.length){lb.textContent='No points recorded yet';}else scores.forEach((x,i)=>{const el=document.createElement('div');el.className='item row';const label=document.createElement('span');label.textContent=`#${i+1} ${String(x.name||'')}`;const pts=document.createElement('span');pts.className='score';pts.textContent=Number(x.points)+' pts';el.append(label,pts);lb.append(el)});const polls=$('polls');polls.replaceChildren();const votes=Array.isArray(state.polls)?state.polls.filter(x=>Number.isFinite(Number(x.votes))&&Number(x.votes)>=0):[];const total=votes.reduce((sum,x)=>sum+Number(x.votes),0);if(!votes.length){polls.textContent='No poll results yet';}else votes.forEach(x=>{const count=Number(x.votes);const percent=total?Math.round(100*count/total):0;const el=document.createElement('div');el.className='item';const label=document.createElement('div');label.className='row';const a=document.createElement('strong');a.textContent=String(x.option||'');const b=document.createElement('span');b.textContent=`${count} votes (${percent}%)`;label.append(a,b);const bar=document.createElement('div');bar.className='voteBar';const fill=document.createElement('div');fill.className='voteFill';fill.style.width=percent+'%';bar.append(fill);el.append(label,bar);polls.append(el)});}
 function recordList(id,rows,make){const root=$(id);root.replaceChildren();if(!Array.isArray(rows)||rows.length===0){const empty=document.createElement('div');empty.className='muted';empty.textContent='No records yet';root.append(empty);return;}rows.slice(0,30).forEach(item=>{const card=document.createElement('article');card.className='record';const details=make(item);for(const [kind,value] of details){if(!value)continue;const el=document.createElement('div');el.className=kind;el.textContent=String(value);card.append(el)}root.append(card)})}
@@ -129,6 +133,7 @@ function parseRows(s,a,b){return s.split('\n').map(x=>x.trim()).filter(Boolean).
 if(firebaseConfig.apiKey==='REPLACE_ME'){show('setup',true);}else{try{const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),ref=doc(db,'dashboard','main');show('login',true);$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginMessage').textContent='';try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(err){$('loginMessage').textContent='Login failed. Check credentials or ask the admin for access.'}});$('logout').onclick=()=>signOut(auth);onAuthStateChanged(auth,async user=>{
  if(unsubscribe){unsubscribe();unsubscribe=null;}
  if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
+ stopSocial();
  $("chatFeed").replaceChildren();
  currentUser=user;isCurrentAdmin=false;
  show('dashboard',false);show('login',!user);
@@ -146,7 +151,7 @@ if(firebaseConfig.apiKey==='REPLACE_ME'){show('setup',true);}else{try{const app=
   $('userLine').textContent=`Signed in: ${user.email}`;
   $('adminPanel').hidden=!isCurrentAdmin;$('mobileAdminLink').hidden=!isCurrentAdmin;
   show('login',false);show('dashboard',true);show('bottomNav',true);
-  startRoyalChat(db,user.uid);
+  startRoyalChat(db,user.uid);startSocial(db,user.uid);
   unsubscribe=onSnapshot(ref,snap=>render(snap.exists()?snap.data():initial),err=>{
    show('dashboard',false);show('login',true);
    $('loginMessage').textContent='Unable to read dashboard. Check Firestore permissions.';
@@ -178,6 +183,102 @@ function startRoyalChat(db,uid){
   feed.dataset.loaded='yes';$('chatStatus').textContent='Live chat connected • Members only';
  },err=>{$('chatStatus').textContent='Chat unavailable: Check Firestore royalChat rules. '+err.code;});
 }
+function stopSocial(){
+ if(presenceUnsubscribe){presenceUnsubscribe();presenceUnsubscribe=null;}
+ if(dmUnsubscribe){dmUnsubscribe();dmUnsubscribe=null;}
+ if(presenceTimer){clearInterval(presenceTimer);presenceTimer=null;}
+ if(presenceClock){clearInterval(presenceClock);presenceClock=null;}
+ activePeer=null;memberDirectory=[];$('privateChat').hidden=true;
+}
+function memberLabel(m){return String(m.name||m.displayName||m.email?.split('@')[0]||'Member').slice(0,60)}
+function renderPresence(presence,uid){
+ const root=$('presenceList');root.replaceChildren();let count=0;
+ const now=Date.now();
+ for(const member of memberDirectory){
+  const last=presence[member.id]?.lastSeen?.toMillis?.()||0;
+  const online=now-last<115000&&last<=now+30000;
+  if(online)count++;
+  const card=document.createElement('div');card.className='presence-person';
+  const info=document.createElement('div');
+  const dot=document.createElement('span');dot.className='presence-dot'+(online?' online':'');
+  const title=document.createElement('strong');title.textContent=memberLabel(member);
+  const status=document.createElement('div');status.className='muted';status.textContent=online?'Online':'Offline';
+  info.append(dot,title,status);card.append(info);
+  if(member.id!==uid){const btn=document.createElement('button');btn.type='button';btn.textContent='Private 💬';btn.onclick=()=>openDM(member);card.append(btn);}
+  else {const me=document.createElement('span');me.className='muted';me.textContent='You';card.append(me);}
+  root.append(card);
+ }
+ $('onlineCount').textContent=String(count);
+}
+let latestPresence={};let socialDb=null;
+async function startSocial(db,uid){
+ socialDb=db;
+ try{
+  const snap=await getDocs(collection(db,'members'));
+  if(currentUser?.uid!==uid)return;
+  memberDirectory=snap.docs.map(d=>({id:d.id,...d.data()}));
+  if(!memberDirectory.some(m=>m.id===uid))return;
+  const ping=async()=>{
+   if(currentUser?.uid!==uid||document.visibilityState!=='visible')return;
+   try{await setDoc(doc(db,'presence',uid),{lastSeen:serverTimestamp()});}catch(err){$('presenceList').textContent='Presence update failed: '+(err.code||'permissions');}
+  };
+  await ping();
+  presenceUnsubscribe=onSnapshot(collection(db,'presence'),snap=>{
+   latestPresence={};snap.docs.forEach(d=>latestPresence[d.id]=d.data());renderPresence(latestPresence,uid);
+  },err=>{$('presenceList').textContent='Presence unavailable: '+(err.code||'permissions');});
+  presenceTimer=setInterval(ping,45000);
+  presenceClock=setInterval(()=>renderPresence(latestPresence,uid),15000);
+ }catch(err){$('presenceList').textContent='Member directory unavailable: '+(err.code||'permissions');}
+}
+function dmThreadId(a,b){return [a,b].sort().join('_')}
+async function ensureThread(uid,peer){
+ const id=dmThreadId(uid,peer),ref=doc(socialDb,'privateChats',id);
+ const snap=await getDoc(ref);
+ if(!snap.exists()){
+  try{await setDoc(ref,{members:[uid,peer].sort(),createdAt:serverTimestamp()});}
+  catch(err){const check=await getDoc(ref);if(!check.exists())throw err;}
+ }
+}
+
+function openDM(member){
+ if(!currentUser||member.id===currentUser.uid)return;
+ if(dmUnsubscribe){dmUnsubscribe();dmUnsubscribe=null;}
+ activePeer=member;$('privateChat').hidden=false;
+ $('dmTitle').textContent='🔐 '+memberLabel(member)+' • Private Chat';
+ $('dmFeed').replaceChildren();$('dmStatus').textContent='Connecting…';
+ const thread=dmThreadId(currentUser.uid,member.id);
+ const q=query(collection(socialDb,'privateChats',thread,'messages'),orderBy('createdAt','desc'),limit(60));
+ const myUid=currentUser.uid;
+ ensureThread(myUid,member.id).then(()=>{if(activePeer?.id!==member.id)return;dmUnsubscribe=onSnapshot(q,snapshot=>{
+  if(!activePeer||activePeer.id!==member.id||currentUser?.uid!==myUid)return;
+  const feed=$('dmFeed');feed.replaceChildren();
+  for(const d of snapshot.docs.slice().reverse()){
+   const m=d.data();const box=document.createElement('div');box.className='chat-msg'+(m.uid===myUid?' mine':'');
+   const author=document.createElement('div');author.className='chat-author';author.textContent=m.uid===myUid?'You':memberLabel(member);
+   const body=document.createElement('div');body.className='chat-body';body.textContent=String(m.text||'');
+   const when=document.createElement('div');when.className='chat-time';when.textContent=m.createdAt?.toDate?.().toLocaleString()||'Sending…';
+   box.append(author,body,when);feed.append(box);
+  }
+  if(snapshot.empty)feed.textContent='No private messages yet.';
+  feed.scrollTop=feed.scrollHeight;$('dmStatus').textContent='Private conversation';
+ },err=>{$('dmStatus').textContent='Unable to load messages: '+(err.code||'permissions');});}).catch(err=>{$('dmStatus').textContent='Unable to open private chat: '+(err.code||'permissions');});
+ $('privateChat').scrollIntoView({behavior:'smooth',block:'start'});
+}
+$('dmClose').onclick=()=>{if(dmUnsubscribe){dmUnsubscribe();dmUnsubscribe=null;}activePeer=null;$('privateChat').hidden=true;};
+$('dmForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!activePeer||!currentUser)return;
+ const input=$('dmInput'),text=input.value.trim(),btn=$('dmSend');if(!text||text.length>500)return;
+ if(Date.now()-lastDmSend<2500){$('dmStatus').textContent='Please wait before sending again.';return;}
+ const peer=activePeer,uid=currentUser.uid,thread=dmThreadId(uid,peer.id);
+ btn.disabled=true;$('dmStatus').textContent='Sending…';
+ try{
+  await ensureThread(uid,peer.id);
+  await addDoc(collection(socialDb,'privateChats',thread,'messages'),{uid,recipientUid:peer.id,text,createdAt:serverTimestamp()});
+  input.value='';lastDmSend=Date.now();$('dmStatus').textContent='Sent securely to '+memberLabel(peer);
+ }catch(err){$('dmStatus').textContent='Send failed: '+(err.code||'permissions');}
+ finally{btn.disabled=false;}
+});
+
 $('chatForm').addEventListener('submit',async e=>{
  e.preventDefault();const input=$('chatInput'),btn=$('chatSend');const message=input.value.trim();
  if(!currentUser||!message||message.length>500)return;
