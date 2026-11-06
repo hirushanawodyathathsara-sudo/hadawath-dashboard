@@ -53,6 +53,9 @@ header> :not(.royal-spark):not(.motion-particle){position:relative;z-index:1}
 @media(max-width:650px){.motion-particle:nth-of-type(n+7){display:none}.royal-link:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){body:before,header:after,header h1,.royal-banner:after,.royal-link .symbol,.voteFill,.motion-particle{animation:none!important}.motion-enter{opacity:1!important;transform:none!important;transition:none!important}}
 
+
+/* V7: members-only live royal chat */
+.chat-shell{border:1px solid #a87638;background:linear-gradient(145deg,#24131e,#0c0c13);border-radius:16px;overflow:hidden}.chat-head{padding:12px 15px;background:#43202b;color:#ffda91;font-weight:750}.chat-feed{height:390px;max-height:58dvh;overflow-y:auto;overscroll-behavior:contain;padding:14px;display:flex;flex-direction:column;gap:12px;scrollbar-color:#a87638 #170e16}.chat-msg{max-width:88%;align-self:flex-start;background:#33212d;border:1px solid #674534;border-radius:15px 15px 15px 4px;padding:10px 12px;overflow-wrap:anywhere;animation:riseIn .22s ease both}.chat-msg.mine{align-self:flex-end;background:#4b2d21;border-color:#b48444;border-radius:15px 15px 4px 15px}.chat-author{color:#f9d58d;font-size:12px;font-weight:800}.chat-body{white-space:pre-wrap;line-height:1.5;margin:4px 0}.chat-time{font-size:10px;color:#c4b3a6;text-align:right}.chat-form{display:flex;gap:8px;padding:12px;background:#1b111a;border-top:1px solid #68472d;align-items:end}.chat-form textarea{margin:0;min-height:46px;max-height:115px;flex:1;resize:vertical}.chat-form button{flex:0 0 auto;min-width:66px}.chat-status{padding:0 14px 12px;font-size:12px;color:#e4c397}.chat-msg:focus-visible{outline:2px solid #ffd48d}@media(max-width:450px){.chat-feed{height:55dvh}.chat-msg{max-width:94%}.chat-form{gap:6px;padding:9px}.chat-form button{padding:10px;min-width:58px}}@media(prefers-reduced-motion:reduce){.chat-msg{animation:none}}
 </style></head><body><main><header><div class="royal-spark"></div><div class="eyebrow">👑 PRIVATE MEMBERS KINGDOM 👑</div><h1>HADAWATH</h1><div class="eyebrow">⚔️ DIVINE KINGDOM WEEK ⚔️</div><p class="royal-tagline">One Kingdom • Nine Legends • Royal Adventures</p></header>
 <section id="setup" class="card hide"><h2>⚙️ Firebase setup needed</h2><p>This dashboard needs your own free Firebase project. Follow the included SETUP guide, then replace the Firebase configuration in this HTML file.</p></section>
 <section id="login" class="card hide"><h2>🔒 Members Login</h2><p class="muted">Only invited HADAWATH members can access the dashboard.</p><form id="loginForm"><label>Email<input id="email" type="email" autocomplete="username" required></label><label>Password<input id="password" type="password" autocomplete="current-password" required></label><button type="submit">Sign in</button></form><p id="loginMessage" class="error" role="status"></p></section>
@@ -65,8 +68,10 @@ header> :not(.royal-spark):not(.motion-particle){position:relative;z-index:1}
 <a class="royal-link" href="#royalLanguage"><span class="symbol">🗣️</span><span><b>Royal Language</b><small>රාජ භාෂාව</small></span></a>
 <a class="royal-link" href="#royalChallenges"><span class="symbol">🎯</span><span><b>Challenges</b><small>අලුත් ආතල්</small></span></a>
 <a class="royal-link" href="#architect"><span class="symbol">🌟</span><span><b>Grand Architect</b><small>Simulation Controller</small></span></a>
+<a class="royal-link" href="#royalChat"><span class="symbol">💬</span><span><b>Royal Chat</b><small>Members Live Chat</small></span></a>
 <a class="royal-link" href="#membersSection"><span class="symbol">👥</span><span><b>Members</b><small>රාජධානියේ සාමාජිකයෝ</small></span></a>
 </nav><div class="grid">
+<div class="card wide royal-section" id="royalChat"><h2>💬 Royal Chat • රාජධානියේ කතාබහ</h2><p class="sectionHelp">Approved HADAWATH members ලාට පමණයි. Messages realtime update වෙනවා. ගෞරවයෙන් කතා කරමු 👑</p><div class="chat-shell"><div class="chat-head">👑 HADAWATH • Members Chat <span id="chatCount" class="muted"></span></div><div class="chat-feed" id="chatFeed" role="log" aria-live="polite" aria-label="Group messages"><p class="muted">Chat loading…</p></div><form id="chatForm" class="chat-form"><label for="chatInput" class="hide">Message</label><textarea id="chatInput" rows="1" maxlength="500" placeholder="රාජ භාෂාවෙන් Message එකක් ලියන්න..." required></textarea><button id="chatSend" type="submit">Send ➤</button></form><div id="chatStatus" class="chat-status" role="status">Members-only chat • Max 500 characters</div></div></div>
 <div class="card hero wide" id="homeSection"><div class="row"><div><div class="eyebrow">CURRENT WEEK</div><div class="big" id="theme">Theme voting underway</div><p id="notice">The next theme will be decided by member vote.</p></div><span class="pill">👑 HADAWATH</span></div></div>
 <div class="card"><h2>👑 Official Roles</h2><div class="list"><div class="item"><strong>Guwa (Menula)</strong><div class="muted">Supreme Founder • Deputy Chief Justice</div></div><div class="item"><strong>Hirusha (Kiri Putha)</strong><div class="muted">Supreme Overseer • Chief Justice</div></div><div class="item"><strong>Ravish (Ge Kolla)</strong><div class="muted">High Court Concept Founder</div></div><div class="item"><strong>ChatGPT</strong><div class="muted">AI Secretary (drafting assistant)</div></div></div></div>
 <div class="card"><h2>📊 Group Updates</h2><div class="list"><div class="item"><span class="muted">Members</span><div class="big">9</div></div><div class="item"><span class="muted">Next Theme</span><div id="nextTheme">Awaiting poll result</div></div><div class="item"><span class="muted">Last updated</span><div id="updated">Not yet updated</div></div></div></div>
@@ -94,11 +99,11 @@ header> :not(.royal-spark):not(.motion-particle){position:relative;z-index:1}
 <label>📅 Theme history (one per line: Theme | Start YYYY-MM-DD | End YYYY-MM-DD | Notes)<textarea id="editThemeHistory" rows="5" placeholder="Court Week | 2026-11-02 | 2026-11-08 | Weekly group theme"></textarea></label>
 <label>🎖️ Achievements (one per line: Award | Member | Date YYYY-MM-DD | Description)<textarea id="editAchievements" rows="5" placeholder="Best Contributor | Menula | 2026-11-05 | Group award"></textarea></label>
 <button type="submit">Save live update</button><p id="saveMessage" role="status"></p></form></div>
-</div></section><nav class="bottom-nav hide" id="bottomNav" aria-label="Mobile navigation"><a href="#homeSection"><span>🏰</span>Home</a><a href="#kingElection"><span>👑</span>King</a><a href="#royalCourt"><span>⚖️</span>Cases</a><a href="#royalDecrees"><span>📜</span>Notices</a><a href="#adminPanel" id="mobileAdminLink" hidden><span>⚙️</span>Admin</a></nav><div class="footer">Created & Designed by <strong>Hirusha</strong><br>The Grand Architect • HADAWATH</div></main>
+</div></section><nav class="bottom-nav hide" id="bottomNav" aria-label="Mobile navigation"><a href="#homeSection"><span>🏰</span>Home</a><a href="#kingElection"><span>👑</span>King</a><a href="#royalCourt"><span>⚖️</span>Cases</a><a href="#royalChat"><span>💬</span>Chat</a><a href="#adminPanel" id="mobileAdminLink" hidden><span>⚙️</span>Admin</a></nav><div class="footer">Created & Designed by <strong>Hirusha</strong><br>The Grand Architect • HADAWATH</div></main>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-import {getFirestore,doc,getDoc,onSnapshot,setDoc,serverTimestamp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import {getFirestore,doc,getDoc,onSnapshot,setDoc,serverTimestamp,collection,query,orderBy,limit,addDoc} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 // Paste your exact Firebase web app configuration from Project Settings > Your apps. Never paste a service-account key here.
 const firebaseConfig={apiKey: "AIzaSyDm1Z70iSWnWsf_uZLnABzq-etpb9cGr9c",
   authDomain: "hadawath-dashboard.firebaseapp.com",
@@ -111,7 +116,7 @@ let isCurrentAdmin=false;
 const $=id=>document.getElementById(id);const show=(id,on)=>$(id).classList.toggle('hide',!on);
 const roster=[['Menula','Guwa','Supreme Founder'],['Hirusha','Kiri Putha','Supreme Overseer'],['Ravish','Ge Kolla','High Court Concept Founder'],['Pavith','Batta','Member'],['Sadew','Polla','Member'],['Ashen','Thawwa','Member'],['Lochana','Lolla','Member'],['Ranuka','Rani','Member'],['Sadaru','Lesbi','Member']];
 const initial={theme:'Theme voting underway',nextTheme:'Awaiting poll result',notice:'Members are choosing the next weekly theme.',announcement:'Welcome to HADAWATH! Official updates will appear here.',cases:[{name:'Sadew case 01/2026',status:'Closed'},{name:'Ranuka case 02/2026',status:'Awaiting update'},{name:'Sadaru case 03/2026',status:'Closed'}],awards:[],scores:[],polls:[],caseRecords:[],themeHistory:[],achievements:[]};
-let state=initial;let unsubscribe=null;let currentUser=null;
+let state=initial;let unsubscribe=null;let chatUnsubscribe=null;let currentUser=null;let chatName="Member";let lastChatSend=0;
 function safeList(target,items,field){const root=$(target);root.replaceChildren();if(!Array.isArray(items)||!items.length){const e=document.createElement('div');e.className='muted';e.textContent='No results yet';root.append(e);return;}items.forEach(item=>{const el=document.createElement('div');el.className='item';const title=document.createElement('strong');title.textContent=String(item.name||item.award||'');const line=document.createElement('div');line.className='muted';line.textContent=String(item.status||item.winner||'');el.append(title,line);root.append(el);});}
 function renderExtra(){const members=$('membersList');members.replaceChildren();for(const [name,nick,role] of roster){const el=document.createElement('div');el.className='member';const title=document.createElement('b');title.textContent=name;const info=document.createElement('div');info.className='muted';info.textContent=nick+' • '+role;el.append(title,info);members.append(el)}const lb=$('leaderboard');lb.replaceChildren();const scores=Array.isArray(state.scores)?state.scores.filter(x=>Number.isFinite(Number(x.points))&&Number(x.points)>=0).sort((a,b)=>Number(b.points)-Number(a.points)):[];if(!scores.length){lb.textContent='No points recorded yet';}else scores.forEach((x,i)=>{const el=document.createElement('div');el.className='item row';const label=document.createElement('span');label.textContent=`#${i+1} ${String(x.name||'')}`;const pts=document.createElement('span');pts.className='score';pts.textContent=Number(x.points)+' pts';el.append(label,pts);lb.append(el)});const polls=$('polls');polls.replaceChildren();const votes=Array.isArray(state.polls)?state.polls.filter(x=>Number.isFinite(Number(x.votes))&&Number(x.votes)>=0):[];const total=votes.reduce((sum,x)=>sum+Number(x.votes),0);if(!votes.length){polls.textContent='No poll results yet';}else votes.forEach(x=>{const count=Number(x.votes);const percent=total?Math.round(100*count/total):0;const el=document.createElement('div');el.className='item';const label=document.createElement('div');label.className='row';const a=document.createElement('strong');a.textContent=String(x.option||'');const b=document.createElement('span');b.textContent=`${count} votes (${percent}%)`;label.append(a,b);const bar=document.createElement('div');bar.className='voteBar';const fill=document.createElement('div');fill.className='voteFill';fill.style.width=percent+'%';bar.append(fill);el.append(label,bar);polls.append(el)});}
 function recordList(id,rows,make){const root=$(id);root.replaceChildren();if(!Array.isArray(rows)||rows.length===0){const empty=document.createElement('div');empty.className='muted';empty.textContent='No records yet';root.append(empty);return;}rows.slice(0,30).forEach(item=>{const card=document.createElement('article');card.className='record';const details=make(item);for(const [kind,value] of details){if(!value)continue;const el=document.createElement('div');el.className=kind;el.textContent=String(value);card.append(el)}root.append(card)})}
@@ -123,6 +128,8 @@ function parseNumbers(raw,label){const lines=raw.split('\n').map(x=>x.trim()).fi
 function parseRows(s,a,b){return s.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,30).map(line=>{const [left,...rest]=line.split('|');return {[a]:(left||'').trim().slice(0,100),[b]:rest.join('|').trim().slice(0,100)}})}
 if(firebaseConfig.apiKey==='REPLACE_ME'){show('setup',true);}else{try{const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),ref=doc(db,'dashboard','main');show('login',true);$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginMessage').textContent='';try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(err){$('loginMessage').textContent='Login failed. Check credentials or ask the admin for access.'}});$('logout').onclick=()=>signOut(auth);onAuthStateChanged(auth,async user=>{
  if(unsubscribe){unsubscribe();unsubscribe=null;}
+ if(chatUnsubscribe){chatUnsubscribe();chatUnsubscribe=null;}
+ $("chatFeed").replaceChildren();
  currentUser=user;isCurrentAdmin=false;
  show('dashboard',false);show('login',!user);
  $('adminPanel').hidden=true;$('mobileAdminLink').hidden=true;show('bottomNav',false);
@@ -135,9 +142,11 @@ if(firebaseConfig.apiKey==='REPLACE_ME'){show('setup',true);}else{try{const app=
    await signOut(auth);return;
   }
   isCurrentAdmin=memberSnap.data().role==='admin';
+  chatName=String(memberSnap.data().name||'Member').slice(0,40);
   $('userLine').textContent=`Signed in: ${user.email}`;
   $('adminPanel').hidden=!isCurrentAdmin;$('mobileAdminLink').hidden=!isCurrentAdmin;
   show('login',false);show('dashboard',true);show('bottomNav',true);
+  startRoyalChat(db,user.uid);
   unsubscribe=onSnapshot(ref,snap=>render(snap.exists()?snap.data():initial),err=>{
    show('dashboard',false);show('login',true);
    $('loginMessage').textContent='Unable to read dashboard. Check Firestore permissions.';
@@ -146,6 +155,39 @@ if(firebaseConfig.apiKey==='REPLACE_ME'){show('setup',true);}else{try{const app=
   $('loginMessage').textContent='Access could not be verified. Check your membership and Firestore rules.';
   await signOut(auth);
  }
+});
+function startRoyalChat(db,uid){
+ const feed=$('chatFeed');feed.replaceChildren();
+ const chatQuery=query(collection(db,'royalChat'),orderBy('createdAt','desc'),limit(60));
+ chatUnsubscribe=onSnapshot(chatQuery,snapshot=>{
+  if(currentUser?.uid!==uid)return;
+  const atBottom=feed.scrollHeight-feed.scrollTop-feed.clientHeight<90;
+  feed.replaceChildren();
+  const docs=snapshot.docs.slice().reverse();
+  $('chatCount').textContent='• Recent '+docs.length;
+  if(!docs.length){const p=document.createElement('p');p.className='muted';p.textContent='තවම Messages නැහැ. පළමු Message එක දාන්න!';feed.append(p);}
+  for(const docSnap of docs){
+   const msg=docSnap.data();const own=msg.uid===uid;
+   const box=document.createElement('div');box.className='chat-msg'+(own?' mine':'');
+   const author=document.createElement('div');author.className='chat-author';author.textContent=own?'You • '+String(msg.name||'Member'):String(msg.name||'Member');
+   const body=document.createElement('div');body.className='chat-body';body.textContent=String(msg.text||'');
+   const when=document.createElement('div');when.className='chat-time';when.textContent=msg.createdAt?.toDate?.().toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})||'Sending…';
+   box.append(author,body,when);feed.append(box);
+  }
+  if(atBottom||!feed.dataset.loaded)feed.scrollTop=feed.scrollHeight;
+  feed.dataset.loaded='yes';$('chatStatus').textContent='Live chat connected • Members only';
+ },err=>{$('chatStatus').textContent='Chat unavailable: Check Firestore royalChat rules. '+err.code;});
+}
+$('chatForm').addEventListener('submit',async e=>{
+ e.preventDefault();const input=$('chatInput'),btn=$('chatSend');const message=input.value.trim();
+ if(!currentUser||!message||message.length>500)return;
+ if(Date.now()-lastChatSend<2500){$('chatStatus').textContent='Please wait a moment before sending again.';return;}
+ btn.disabled=true;$('chatStatus').textContent='Sending…';
+ try{
+  await addDoc(collection(db,'royalChat'),{uid:currentUser.uid,name:chatName,text:message,createdAt:serverTimestamp()});
+  input.value='';lastChatSend=Date.now();$('chatStatus').textContent='Message sent 👑';
+ }catch(err){$('chatStatus').textContent='Message failed: '+(err.code||'Check Firestore permissions');}
+ finally{btn.disabled=false;}
 });
 $('editForm').addEventListener('submit',async e=>{e.preventDefault();$('saveMessage').textContent='Saving…';if(!isCurrentAdmin){$('saveMessage').textContent='Admin access required.';return;}try{await setDoc(ref,{queenInfo:$('editQueenInfo').value.trim(),decreeInfo:$('editDecreeInfo').value.trim(),challengeInfo:$('editChallengeInfo').value.trim(),theme:$('editTheme').value.trim(),nextTheme:$('editNext').value.trim(),notice:$('editNotice').value.trim(),announcement:$('editAnnouncement').value.trim(),cases:parseRows($('editCases').value,'name','status'),awards:parseRows($('editAwards').value,'award','winner'),scores:parseNumbers($('editScores').value,'scores'),polls:parseNumbers($('editPolls').value,'polls'),caseRecords:parseStructured($('editCaseRecords').value,['id','title','complainant','status','verdict','history'],'Court cases'),themeHistory:validateDateFields(parseStructured($('editThemeHistory').value,['theme','start','end','notes'],'Theme history'),['start','end'],'Theme history'),achievements:validateDateFields(parseStructured($('editAchievements').value,['award','member','date','description'],'Achievements'),['date'],'Achievements'),updatedAt:serverTimestamp()},{merge:true});$('saveMessage').className='success';$('saveMessage').textContent='Saved successfully.'}catch(err){$('saveMessage').className='error';$('saveMessage').textContent=err.message?.startsWith('scores')||err.message?.startsWith('polls')||err.message?.startsWith('Court cases')||err.message?.startsWith('Theme history')||err.message?.startsWith('Achievements')||err.message?.includes('Number')?err.message:'Save failed. Check Firestore security rules.'}});}catch(err){show('setup',true);$('setup').append(document.createTextNode(' Firebase configuration is invalid.'))}}
 
