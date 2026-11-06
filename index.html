@@ -17,6 +17,42 @@ input,textarea,select{background:#0d0a0e;border-color:#663043}input:focus,textar
 /* DIVINE KINGDOM MOBILE V5 */
 :root{--bg:#08080d;--panel:#171019;--panel2:#251722;--gold:#f4c76c;--text:#fff5e6;--muted:#d0b8b5;--line:#76502e}
 html{scroll-behavior:smooth}body{background:radial-gradient(ellipse at 50% 0,#481529 0%,#120d17 36%,#08080d 80%);padding-bottom:75px}main{max-width:1080px;padding:12px 14px 65px}header{padding:36px 4px 24px;background:radial-gradient(ellipse at 50% 35%,#a76b2d33,transparent 70%)}header:before{content:'♛';color:#ffc46b;opacity:.2;animation:floatCrown 5s ease-in-out infinite}h1{color:#ffd58c;text-shadow:0 0 18px #e69a4580,0 0 48px #d71c4244;font-size:clamp(35px,9vw,68px)}h2,.big,.item strong,.member b,.recordTitle,.score{color:#f5c76e}.eyebrow{color:#eac789}.card{border:1px solid #79502e;background:linear-gradient(145deg,#25131e,#100e15);box-shadow:0 8px 28px #0009;border-radius:18px}.hero{background:linear-gradient(120deg,#501b29,#2a1624,#1b121b);border-color:#c89549}.pill{background:#573122;color:#ffdfa2}.item,.member,.record{background:#251722;border-color:#69432f}button{background:linear-gradient(120deg,#a86a2b,#f7d384);color:#25111a;min-height:44px}button.secondary{background:#38232b;color:#fff0d7}input,textarea,select{border-color:#78563c}input:focus,textarea:focus,select:focus{outline:2px solid #eab96b}.voteFill{background:linear-gradient(90deg,#a35b2a,#f5c76e)}.yt-value{color:#f5c76e}.yt-link{color:#ffd082}.yt-tile{background:#281522;border-color:#70452e}.royal-top{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0;color:#f7d28c;font-size:12px;letter-spacing:.13em}.royal-tagline{font-size:14px;color:#eed2ae}.royal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 20px}.royal-link{display:flex;align-items:center;gap:10px;padding:13px 12px;border:1px solid #916038;border-radius:14px;background:linear-gradient(125deg,#451e2b,#1b1320);color:#ffedc6;text-decoration:none;min-height:78px;transition:transform .2s,border-color .2s}.royal-link:active{transform:scale(.97)}.royal-link .symbol{font-size:27px}.royal-link b{display:block;font-size:13px}.royal-link small{display:block;color:#d5b3a8;font-size:11px;margin-top:3px}.royal-banner{border:1px solid #bd8a45;background:linear-gradient(100deg,#4e1625,#2c1724);padding:16px;border-radius:15px;margin:14px 0 20px;text-align:center}.royal-banner strong{color:#ffd88b}.royal-banner p{margin:6px 0 0}.royal-section{scroll-margin-top:16px}.royal-list{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8}.royal-list:empty:before{content:'තවම නිවේදනයක් නැහැ.';color:#d0b8b5}.royal-role{color:#e5c088;font-size:12px;margin:8px 0}.bottom-nav{position:fixed;z-index:40;bottom:0;left:0;right:0;background:#100b12ed;backdrop-filter:blur(14px);border-top:1px solid #95683c;display:none;justify-content:space-around;padding:8px 5px max(8px,env(safe-area-inset-bottom))}.bottom-nav a{display:grid;justify-items:center;gap:3px;color:#e7c596;text-decoration:none;font-size:10px;min-width:54px;padding:4px}.bottom-nav span{font-size:20px}.reveal{animation:riseIn .55s ease both}.royal-spark{position:absolute;inset:0;pointer-events:none;overflow:hidden}.royal-spark:before,.royal-spark:after{content:'✦';position:absolute;color:#f4c76c;opacity:.6;animation:twinkle 3s ease-in-out infinite}.royal-spark:before{left:10%;top:18%}.royal-spark:after{right:12%;top:50%;animation-delay:1.5s}@keyframes floatCrown{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-9px)}}@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.8;transform:scale(1.2)}}@keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@media(min-width:700px){.royal-grid{grid-template-columns:repeat(4,1fr)}}@media(max-width:650px){main{padding:10px 12px 45px}.grid{grid-template-columns:1fr;gap:12px}.wide{grid-column:auto}.card{padding:16px}.royal-link{min-height:84px}.bottom-nav{display:flex}.membergrid{grid-template-columns:repeat(2,minmax(0,1fr))}header{padding-top:23px}header h1{letter-spacing:.03em}.youtube-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:350px){.royal-grid{grid-template-columns:1fr}.membergrid{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* KINGDOM V6: motion polish, mobile-friendly and reduced-motion aware */
+:root{--royal-glow:#ffcf7a}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 15% 20%,#bb72251a,transparent 30%),radial-gradient(circle at 85% 75%,#ac22421a,transparent 35%);animation:ambientShift 18s ease-in-out infinite alternate}
+header{isolation:isolate;overflow:hidden;border-radius:0 0 22px 22px}
+header:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(110deg,transparent 25%,#ffd78815 48%,transparent 70%);background-size:240% 100%;animation:royalSweep 10s linear infinite}
+header h1{animation:titleGlow 4s ease-in-out infinite alternate}
+.royal-banner{position:relative;overflow:hidden;box-shadow:0 0 22px #a8643020}
+.royal-banner:after{content:"";position:absolute;top:-100%;left:-35%;width:24%;height:300%;background:linear-gradient(90deg,transparent,#fff0b523,transparent);transform:rotate(24deg);animation:bannerShine 9s ease-in-out infinite;pointer-events:none}
+.royal-link{position:relative;overflow:hidden;transition:transform .22s ease,box-shadow .25s ease,border-color .25s ease;will-change:auto}
+.royal-link:hover,.royal-link:focus-visible{transform:translateY(-3px);border-color:#ffd58c;box-shadow:0 8px 24px #e5a14a25}
+.royal-link .symbol{display:inline-block;animation:iconFloat 3.8s ease-in-out infinite}
+.royal-link:nth-child(2n) .symbol{animation-delay:-1.8s}
+.card{transition:border-color .25s ease,box-shadow .25s ease}
+.card:focus-within{border-color:#c99a57;box-shadow:0 0 0 1px #c99a5738,0 12px 30px #0009}
+.voteFill{transform-origin:left center;animation:voteGrow .9s cubic-bezier(.2,.8,.2,1) both}
+.bottom-nav a{border-radius:12px;transition:background .2s,color .2s,transform .2s}
+.bottom-nav a:active{transform:scale(.93)}
+.bottom-nav a.active{background:#8c552b40;color:#ffda91}
+.bottom-nav a.active span{filter:drop-shadow(0 0 7px #ffca76aa)}
+button{position:relative;overflow:hidden;transition:filter .2s,transform .2s}
+button:active{transform:scale(.97)}
+.motion-particle{position:absolute;z-index:0;pointer-events:none;top:-12px;left:var(--x);font-size:var(--size);color:#ffdb94;opacity:0;text-shadow:0 0 9px #ffc16b;animation:particleFall var(--duration) linear var(--delay) infinite}
+header> :not(.royal-spark):not(.motion-particle){position:relative;z-index:1}
+.motion-enter{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+.motion-enter.motion-visible{opacity:1;transform:translateY(0)}
+@keyframes ambientShift{from{opacity:.45;transform:scale(1)}to{opacity:1;transform:scale(1.07)}}
+@keyframes royalSweep{from{background-position:200% 0}to{background-position:-100% 0}}
+@keyframes titleGlow{from{text-shadow:0 0 14px #d59a5270,0 0 30px #ad193a30}to{text-shadow:0 0 24px #ffce8faa,0 0 55px #dd673d65}}
+@keyframes bannerShine{0%,60%,100%{left:-45%}78%{left:135%}}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes voteGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes particleFall{0%{opacity:0;transform:translate3d(0,-15px,0) rotate(0)}15%{opacity:.7}80%{opacity:.55}100%{opacity:0;transform:translate3d(22px,220px,0) rotate(140deg)}}
+@media(max-width:650px){.motion-particle:nth-of-type(n+7){display:none}.royal-link:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){body:before,header:after,header h1,.royal-banner:after,.royal-link .symbol,.voteFill,.motion-particle{animation:none!important}.motion-enter{opacity:1!important;transform:none!important;transition:none!important}}
+
 </style></head><body><main><header><div class="royal-spark"></div><div class="eyebrow">👑 PRIVATE MEMBERS KINGDOM 👑</div><h1>HADAWATH</h1><div class="eyebrow">⚔️ DIVINE KINGDOM WEEK ⚔️</div><p class="royal-tagline">One Kingdom • Nine Legends • Royal Adventures</p></header>
 <section id="setup" class="card hide"><h2>⚙️ Firebase setup needed</h2><p>This dashboard needs your own free Firebase project. Follow the included SETUP guide, then replace the Firebase configuration in this HTML file.</p></section>
 <section id="login" class="card hide"><h2>🔒 Members Login</h2><p class="muted">Only invited HADAWATH members can access the dashboard.</p><form id="loginForm"><label>Email<input id="email" type="email" autocomplete="username" required></label><label>Password<input id="password" type="password" autocomplete="current-password" required></label><button type="submit">Sign in</button></form><p id="loginMessage" class="error" role="status"></p></section>
@@ -152,4 +188,31 @@ async function refreshYouTube(){
  }catch(error){ytText('ytStatus','YouTube stats unavailable: '+error.message)}
 }
 refreshYouTube();setInterval(()=>{if(!document.hidden)refreshYouTube()},10*60*1000);
+
+// V6 decorative enhancements; independent of Firebase and existing data.
+(() => {
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+ const header=document.querySelector('header');
+ if(header && !reduced.matches){
+  const glyphs=['✦','✧','◆','✦','✧','✦','◆','✧'];
+  glyphs.forEach((glyph,i)=>{
+   const star=document.createElement('span');star.className='motion-particle';star.textContent=glyph;
+   star.style.setProperty('--x',`${8+(i*13)%86}%`);
+   star.style.setProperty('--size',`${9+(i%3)*3}px`);
+   star.style.setProperty('--duration',`${7+(i%4)*2}s`);
+   star.style.setProperty('--delay',`${-i*1.6}s`);
+   star.setAttribute('aria-hidden','true');header.append(star);
+  });
+ }
+ if('IntersectionObserver' in window && !reduced.matches){
+  const observer=new IntersectionObserver(entries=>{
+   entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('motion-visible');observer.unobserve(entry.target)}})
+  },{threshold:.06,rootMargin:'0px 0px 40px 0px'});
+  document.querySelectorAll('.royal-link,.royal-banner,.card').forEach(el=>{el.classList.add('motion-enter');observer.observe(el)});
+ }
+ const links=[...document.querySelectorAll('.bottom-nav a[href^="#"]')];
+ links.forEach(link=>link.addEventListener('click',()=>{links.forEach(a=>a.classList.remove('active'));link.classList.add('active')}));
+ const first=links[0];if(first)first.classList.add('active');
+})();
+
 </script></body></html>
