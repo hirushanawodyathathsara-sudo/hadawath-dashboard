@@ -1,0 +1,24 @@
+{
+  "name": "HADAWATH Kingdom",
+  "short_name": "HADAWATH",
+  "description": "Private HADAWATH members dashboard and messenger",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#100b12",
+  "theme_color": "#160b12",
+  "icons": [
+    {
+      "src": "./hadawath-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./hadawath-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
